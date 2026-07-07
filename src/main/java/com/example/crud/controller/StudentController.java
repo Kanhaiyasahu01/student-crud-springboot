@@ -29,11 +29,11 @@ public class StudentController {
 
     // get single student
     @GetMapping("{id}")
-    public ResponseEntity<Student> findStudent(@PathVariable Long id){
-        Student student = studentService.findStudent(id);
-
-        return ResponseEntity.ok(student);
+    public ResponseEntity<CreateStudentResponseDto> findStudent(@PathVariable Long id){
+        CreateStudentResponseDto studentRes = studentService.findStudent(id);
+        return ResponseEntity.ok(studentRes);
     }
+    
     // get all students
     @GetMapping
     public ResponseEntity<List<Student>> findAllStudent(){

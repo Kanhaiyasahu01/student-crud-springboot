@@ -25,15 +25,19 @@ public class StudentService {
         student.setDeleted(false);
         Student savedStudent = studentRepository.save(student);
         CreateStudentResponseDto studentRes = mapToDto(savedStudent);
+        studentRes.setMessage("Student Created Successfully");
         return studentRes;
     }
 
-    public Student findStudent(Long id){
+    public CreateStudentResponseDto findStudent(Long id){
         // find the student by id
         Optional<Student> studentRes = studentRepository.findByIdAndDeletedIsFalse(id);
 
         if(studentRes.isPresent()){
-            return studentRes.get();
+            // map to response dto
+            CreateStudentResponseDto studentResDto =  mapToDto(studentRes.get());
+            studentResDto.setMessage("Student fetched successfully");
+            return studentResDto;
         }
         return null;
     }
@@ -103,7 +107,6 @@ public class StudentService {
         studentResponseDto.setAge(student.getAge());
         studentResponseDto.setSubject(student.getSubject());
         studentResponseDto.setRollNo(student.getRollNo());
-        studentResponseDto.setMessage("Student Created Successfully");
 
         return studentResponseDto;
     }
