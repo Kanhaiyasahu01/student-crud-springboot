@@ -33,7 +33,7 @@ public class StudentController {
         CreateStudentResponseDto studentRes = studentService.findStudent(id);
         return ResponseEntity.ok(studentRes);
     }
-    
+
     // get all students
     @GetMapping
     public ResponseEntity<List<Student>> findAllStudent(){
@@ -43,9 +43,9 @@ public class StudentController {
 
     // update a student.
     @PutMapping("{id}")
-    public ResponseEntity<Student> updateStudent(@PathVariable Long id, @RequestBody Student student){
-        Student studentRes = studentService.updateStudent(id,student);
-        return ResponseEntity.ok(studentRes);
+    public ResponseEntity<CreateStudentResponseDto> updateStudent(@PathVariable Long id, @RequestBody CreateStudentRequestDto studentReqDto){
+        CreateStudentResponseDto studentResDto = studentService.updateStudent(id,studentReqDto);
+        return ResponseEntity.ok(studentResDto);
     }
 
     // delete a student permanently

@@ -48,7 +48,7 @@ public class StudentService {
         return studentListRes;
     }
 
-    public Student updateStudent(Long id, Student student ){
+    public CreateStudentResponseDto updateStudent(Long id, CreateStudentRequestDto studentReqDto ){
         // get the the student by id;
         Optional<Student> existingStudent = studentRepository.findById(id);
 
@@ -57,15 +57,17 @@ public class StudentService {
         }
 
         Student newStudent = existingStudent.get();
-        newStudent.setName(student.getName());
-        newStudent.setEmail(student.getEmail());
-        newStudent.setAge(student.getAge());
-        newStudent.setSubject(student.getSubject());
-        newStudent.setRollNo(student.getRollNo());
+        newStudent.setName(studentReqDto.getName());
+        newStudent.setEmail(studentReqDto.getEmail());
+        newStudent.setAge(studentReqDto.getAge());
+        newStudent.setSubject(studentReqDto.getSubject());
+        newStudent.setRollNo(studentReqDto.getRollNo());
 
         Student studentRes = studentRepository.save(newStudent);
 
-        return studentRes;
+        CreateStudentResponseDto studentResDto = mapToDto(studentRes);
+        studentResDto.setMessage("Student updated successfully");
+        return studentResDto;
 
     }
 
