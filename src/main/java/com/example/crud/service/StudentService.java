@@ -2,6 +2,7 @@ package com.example.crud.service;
 
 import com.example.crud.dto.CreateStudentRequestDto;
 import com.example.crud.dto.CreateStudentResponseDto;
+import com.example.crud.dto.GetStudentResponseDto;
 import com.example.crud.entity.Student;
 import com.example.crud.repository.StudentRepository;
 import org.springframework.stereotype.Service;
@@ -43,10 +44,10 @@ public class StudentService {
         return null;
     }
 
-    public List<CreateStudentResponseDto> findAllStudents(){
+    public List<GetStudentResponseDto> findAllStudents(){
         List<Student> studentListRes = studentRepository.findAllByDeletedIsFalse();
 
-        List<CreateStudentResponseDto> studentResDtoList = maptoList(studentListRes);
+        List<GetStudentResponseDto> studentResDtoList = maptoList(studentListRes);
 
         return studentResDtoList;
     }
@@ -116,19 +117,16 @@ public class StudentService {
         return studentResponseDto;
     }
 
-    private List<CreateStudentResponseDto> maptoList(List<Student> studentListRes){
+    private List<GetStudentResponseDto> maptoList(List<Student> studentListRes){
 
-        List<CreateStudentResponseDto> studentResDtoList = new ArrayList<>();
+        List<GetStudentResponseDto> studentResDtoList = new ArrayList<>();
         for(Student student: studentListRes){
-            CreateStudentResponseDto studentResDto = new CreateStudentResponseDto();
+            GetStudentResponseDto studentResDto = new GetStudentResponseDto();
             studentResDto.setName(student.getName());
             studentResDto.setEmail(student.getEmail());
             studentResDto.setAge(student.getAge());
             studentResDto.setRollNo(student.getRollNo());
             studentResDto.setSubject(student.getSubject());
-            // we can create a seperate response dto list?
-            studentResDto.setMessage("fetched student list");
-
             studentResDtoList.add(studentResDto);
         }
 

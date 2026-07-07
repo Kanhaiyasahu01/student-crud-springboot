@@ -2,6 +2,7 @@ package com.example.crud.controller;
 
 import com.example.crud.dto.CreateStudentRequestDto;
 import com.example.crud.dto.CreateStudentResponseDto;
+import com.example.crud.dto.GetStudentResponseDto;
 import com.example.crud.entity.Student;
 import com.example.crud.service.StudentService;
 import org.springframework.http.HttpStatus;
@@ -36,8 +37,8 @@ public class StudentController {
 
     // get all students
     @GetMapping
-    public ResponseEntity<List<CreateStudentResponseDto>> findAllStudent(){
-        List<CreateStudentResponseDto> studentListRes = studentService.findAllStudents();
+    public ResponseEntity<List<GetStudentResponseDto>> findAllStudent(){
+        List<GetStudentResponseDto> studentListRes = studentService.findAllStudents();
         return ResponseEntity.ok(studentListRes);
     }
 
