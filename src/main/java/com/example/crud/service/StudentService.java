@@ -7,6 +7,7 @@ import com.example.crud.repository.StudentRepository;
 import org.springframework.stereotype.Service;
 
 import javax.swing.text.html.Option;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,10 +43,12 @@ public class StudentService {
         return null;
     }
 
-    public List<Student> findAllStudents(){
+    public List<CreateStudentResponseDto> findAllStudents(){
         List<Student> studentListRes = studentRepository.findAllByDeletedIsFalse();
 
-        return studentListRes;
+        List<CreateStudentResponseDto> studentResDtoList = maptoList(studentListRes);
+
+        return studentResDtoList;
     }
 
     public CreateStudentResponseDto updateStudent(Long id, CreateStudentRequestDto studentReqDto ){
@@ -111,5 +114,24 @@ public class StudentService {
         studentResponseDto.setRollNo(student.getRollNo());
 
         return studentResponseDto;
+    }
+
+    private List<CreateStudentResponseDto> maptoList(List<Student> studentListRes){
+
+        List<CreateStudentResponseDto> studentResDtoList = new ArrayList<>();
+        for(Student student: studentListRes){
+            CreateStudentResponseDto studentResDto = new CreateStudentResponseDto();
+            studentResDto.setName(student.getName());
+            studentResDto.setEmail(student.getEmail());
+            studentResDto.setAge(student.getAge());
+            studentResDto.setRollNo(student.getRollNo());
+            studentResDto.setSubject(student.getSubject());
+            // we can create a seperate response dto list?
+            studentResDto.setMessage("fetched student list");
+
+            studentResDtoList.add(studentResDto);
+        }
+
+        return studentResDtoList;
     }
 }
