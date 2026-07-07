@@ -1,5 +1,7 @@
 package com.example.crud.service;
 
+import com.example.crud.dto.CreateStudentRequestDto;
+import com.example.crud.dto.CreateStudentResponseDto;
 import com.example.crud.entity.Student;
 import com.example.crud.repository.StudentRepository;
 import org.springframework.stereotype.Service;
@@ -16,21 +18,13 @@ public class StudentService {
         this.studentRepository = studentRepository;
     }
 
-    public Student createStudent(Student studentReq){
-        // perform the business
-        System.out.println("Inside services");
-        if(studentReq.getName().length() < 3 || studentReq.getName().length() > 50){
-            throw new RuntimeException("Name should be of minimum 3 characters or maximum of 50 characters");
-        }
-        if(studentReq.getEmail().isBlank()){
-            throw new RuntimeException("Email is required");
-        }
-        if(studentReq.getAge() < 18){
-            throw new RuntimeException("Age must be greater then 18");
-        }
+    public CreateStudentResponseDto createStudent(CreateStudentRequestDto studentReqDto){
+        // get the student from student req dto
 
-        studentReq.setDeleted(false);
-        Student studentRes = studentRepository.save(studentReq);
+        Student student = maptoEntity(studentReqDto);
+        student.setDeleted(false);
+        Student savedStudent = studentRepository.save(student);
+        CreateStudentResponseDto studentRes = mapToDto(savedStudent);
         return studentRes;
     }
 
@@ -89,5 +83,28 @@ public class StudentService {
         deletedStudent.setDeleted(true);
         Student s1 = studentRepository.save(deletedStudent);
         return "Student Saved Deleted";
+    }
+
+    private Student maptoEntity(CreateStudentRequestDto studentRequestDto){
+        Student student = new Student();
+        student.setName(studentRequestDto.getName());
+        student.setEmail(studentRequestDto.getEmail());
+        student.setSubject(studentRequestDto.getSubject());
+        student.setAge(studentRequestDto.getAge());
+        student.setRollNo(studentRequestDto.getRollNo());
+
+        return student;
+    }
+
+    private CreateStudentResponseDto mapToDto(Student student){
+        CreateStudentResponseDto studentResponseDto = new CreateStudentResponseDto();
+        studentResponseDto.setName(student.getName());
+        studentResponseDto.setEmail(student.getEmail());
+        studentResponseDto.setAge(student.getAge());
+        studentResponseDto.setSubject(student.getSubject());
+        studentResponseDto.setRollNo(student.getRollNo());
+        studentResponseDto.setMessage("Student Created Successfully");
+
+        return studentResponseDto;
     }
 }

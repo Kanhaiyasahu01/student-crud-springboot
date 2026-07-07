@@ -1,5 +1,7 @@
 package com.example.crud.controller;
 
+import com.example.crud.dto.CreateStudentRequestDto;
+import com.example.crud.dto.CreateStudentResponseDto;
 import com.example.crud.entity.Student;
 import com.example.crud.service.StudentService;
 import org.springframework.http.HttpStatus;
@@ -19,10 +21,10 @@ public class StudentController {
     }
     // create student
     @PostMapping
-    public ResponseEntity<Student> createStudent(@RequestBody Student studentReq){
-        Student studentRes = studentService.createStudent(studentReq);
+    public ResponseEntity<CreateStudentResponseDto> createStudent(@RequestBody CreateStudentRequestDto studentReqDto){
+        CreateStudentResponseDto studentResDto = studentService.createStudent(studentReqDto);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(studentRes);
+        return ResponseEntity.status(HttpStatus.CREATED).body(studentResDto);
     }
 
     // get single student
