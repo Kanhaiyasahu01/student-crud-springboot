@@ -5,6 +5,7 @@ import com.example.crud.dto.CreateStudentResponseDto;
 import com.example.crud.dto.GetStudentResponseDto;
 import com.example.crud.entity.Student;
 import com.example.crud.service.StudentService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +23,7 @@ public class StudentController {
     }
     // create student
     @PostMapping
-    public ResponseEntity<CreateStudentResponseDto> createStudent(@RequestBody CreateStudentRequestDto studentReqDto){
+    public ResponseEntity<CreateStudentResponseDto> createStudent(@Valid @RequestBody CreateStudentRequestDto studentReqDto){
         CreateStudentResponseDto studentResDto = studentService.createStudent(studentReqDto);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(studentResDto);

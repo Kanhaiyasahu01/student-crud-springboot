@@ -1,9 +1,18 @@
 package com.example.crud.dto;
 
+import jakarta.validation.constraints.*;
+
 public class CreateStudentRequestDto {
+    @NotBlank(message = "Name must not be blank, null or spaces")
+    @Size(min = 2, max = 50, message = "Name must be of minimun 2 character or maximum of 50 characters")
     private String name;
+
+    @Email
     private String email;
+    @Positive
+    @Min(value = 18, message = "Age must be 18 or more")
     private int age;
+
     private int rollNo;
     private String subject;
 
